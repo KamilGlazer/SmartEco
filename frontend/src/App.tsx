@@ -1,11 +1,10 @@
-import { Button } from "@/components/ui/button"
+import { PrimaryButton } from "@/components/ui/PrimaryButton"
 import "@/index.css"
 
 function App() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold bg">SmartEco</h1>
-      <Button>Click me</Button>
+    <div className="min-h-screen p-6">
+      <PrimaryButton>Click me</PrimaryButton>
     </div>
   )
 }
