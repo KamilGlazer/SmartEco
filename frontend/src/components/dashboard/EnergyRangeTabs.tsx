@@ -31,7 +31,7 @@ function EnergyRangeTabs({
             key={option.value}
             value={option.value}
             className={cn(
-              "h-8 rounded-full px-4 text-sm font-medium text-[#8C929F] transition-all hover:text-[#d7e0dc]",
+              "h-6 rounded-full px-4 text-sm font-medium text-[#8C929F] transition-all hover:text-[#d7e0dc]",
               "data-active:bg-[#00E676] data-active:text-black data-active:shadow-none hover:text-[#d7e0dc]",
             )}
           >
