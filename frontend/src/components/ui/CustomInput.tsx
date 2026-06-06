@@ -24,7 +24,7 @@ const CustomInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
         <Input
           ref={ref}
           placeholder={placeholder}
-          className="h-auto border-0 bg-transparent p-0 text-4xl text-[#C3C9BD] placeholder:text-[#AAB3A0] focus-visible:border-0 focus-visible:ring-0"
+          className="h-auto border-0 bg-transparent p-0 pl-0.5 text-4xl text-[#C3C9BD] placeholder:text-[#AAB3A0] focus-visible:border-0 focus-visible:ring-0"
           {...props}
         />
       </div>

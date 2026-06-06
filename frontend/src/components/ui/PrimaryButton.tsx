@@ -16,7 +16,7 @@ const PrimaryButton = React.forwardRef<HTMLButtonElement, PrimaryButtonProps>(
           ...style,
         }}
         className={cn(
-          "inline-flex items-center justify-center rounded-lg bg-[#00E676] px-4 py-2 text-sm font-bold text-black transition-transform duration-100 ease-out hover:brightness-95 active:scale-95 disabled:pointer-events-none disabled:opacity-50",
+          "inline-flex items-center cursor-pointer justify-center rounded-lg bg-[#00E676] px-4 py-2 text-sm font-bold text-black transition-transform duration-100 ease-out hover:brightness-95 active:scale-95 disabled:pointer-events-none disabled:opacity-50",
           className
         )}
         {...props}
