@@ -9,6 +9,7 @@ import {
   Users,
   Zap,
 } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const MAIN_NAV_ITEMS = [
@@ -34,6 +35,7 @@ function isNavItemActive(pathname: string, path: string) {
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   return (
     <aside className="flex h-screen w-[260px] shrink-0 flex-col border-r border-white/10 bg-[#0D0D0D] px-3 py-6">
@@ -61,6 +63,10 @@ function Navbar() {
         <NavbarOption
           label="Logout"
           icon={<LogOut className="size-5" strokeWidth={1.75} />}
+          onClick={() => {
+            logout();
+            navigate("/login", { replace: true });
+          }}
         />
       </div>
     </aside>

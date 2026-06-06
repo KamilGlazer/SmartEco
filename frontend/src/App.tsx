@@ -1,5 +1,7 @@
 import "@/index.css";
 import { Routes, Route } from "react-router-dom";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { Login } from "./pages/auth/Login";
 import { Layout } from "./pages/layout/Layout";
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { Infrastructure } from "./pages/infrastructure/Infrastructure";
@@ -10,12 +12,15 @@ import { EnergyAnalysis } from "./pages/energy-analysis/EnergyAnalysis";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="infrastructure" element={<Infrastructure />} />
-        <Route path="family" element={<Family />} />
-        <Route path="automations" element={<Automations />} />
-        <Route path="energy-analysis" element={<EnergyAnalysis />} />
+      <Route path="/login" element={<Login />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="infrastructure" element={<Infrastructure />} />
+          <Route path="family" element={<Family />} />
+          <Route path="automations" element={<Automations />} />
+          <Route path="energy-analysis" element={<EnergyAnalysis />} />
+        </Route>
       </Route>
     </Routes>
   );
