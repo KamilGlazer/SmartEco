@@ -9,9 +9,13 @@ type LoginCredentials = {
   password: string;
 };
 
+type RegisterCredentials = LoginCredentials & {
+  fullName: string;
+};
+
 type LoginResponse = {
   user: AuthUser;
   token: string;
 };
 
-export type { AuthUser, LoginCredentials, LoginResponse };
+export type { AuthUser, LoginCredentials, LoginResponse, RegisterCredentials };

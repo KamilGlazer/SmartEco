@@ -15,6 +15,8 @@ const CustomInput = React.forwardRef<HTMLInputElement, CustomInputProps>(
       <div
         className={cn(
           "flex h-10 w-full items-center gap-4 rounded-xl border border-[#3B3E45] bg-[#151515] px-4",
+          "focus-within:border-emerald-500",
+          "focus-within:ring-2 focus-within:ring-emerald-500/20 transition-all duration-300",
           className
         )}
       >
