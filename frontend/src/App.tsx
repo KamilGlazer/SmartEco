@@ -2,6 +2,7 @@ import "@/index.css";
 import { Routes, Route } from "react-router-dom";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { Login } from "./pages/auth/Login";
+import { Register } from "./pages/auth/Register";
 import { Layout } from "./pages/layout/Layout";
 import { Dashboard } from "./pages/dashboard/Dashboard";
 import { Infrastructure } from "./pages/infrastructure/Infrastructure";
@@ -13,6 +14,7 @@ function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />

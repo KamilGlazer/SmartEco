@@ -1,5 +1,5 @@
-import { validateMockLogin } from "@/api/auth/mock";
-import type { LoginCredentials, LoginResponse } from "@/api/auth/types";
+import { registerMockUser, validateMockLogin } from "@/api/auth/mock";
+import type { LoginCredentials, LoginResponse, RegisterCredentials } from "@/api/auth/types";
 
 const FETCH_DELAY_MS = 400;
 
@@ -31,4 +31,23 @@ async function login(credentials: LoginCredentials): Promise<LoginResponse> {
   };
 }
 
-export { AuthError, login };
+async function register(credentials: RegisterCredentials): Promise<LoginResponse> {
+  await delay(FETCH_DELAY_MS);
+
+  try {
+    const user = registerMockUser(credentials);
+
+    return {
+      user,
+      token: `mock-token-${user.id}`,
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new AuthError(error.message);
+    }
+
+    throw new AuthError("Unable to register. Please try again.");
+  }
+}
+
+export { AuthError, login, register };
