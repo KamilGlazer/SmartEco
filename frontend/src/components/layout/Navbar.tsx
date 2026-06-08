@@ -1,7 +1,6 @@
 import logo from "@/assets/logo_v2.png";
 import { NavbarOption } from "@/components/ui/NavbarOption";
 import {
-  HelpCircle,
   LampDesk,
   LayoutGrid,
   LineChart,
@@ -11,6 +10,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { SupportDialog } from "./SupportDialog";
 
 const MAIN_NAV_ITEMS = [
   { label: "Dashboard", path: "/", icon: LayoutGrid },
@@ -56,10 +56,7 @@ function Navbar() {
       </nav>
 
       <div className="mt-auto flex flex-col gap-1 border-t border-white/10 pt-4">
-        <NavbarOption
-          label="Support"
-          icon={<HelpCircle className="size-5" strokeWidth={1.75} />}
-        />
+        <SupportDialog />
         <NavbarOption
           label="Logout"
           icon={<LogOut className="size-5" strokeWidth={1.75} />}
