@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import {
+  deleteFamilyMember,
   fetchFamilyMembers,
   inviteFamilyMember,
 } from "@/api/family/familyApi";
@@ -13,6 +14,7 @@ const Family = () => {
   const [members, setMembers] = useState<FamilyMember[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingMemberId, setDeletingMemberId] = useState<string | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -43,12 +45,30 @@ const Family = () => {
     }
   }, []);
 
+  const handleDeleteMember = useCallback(async (memberId: string) => {
+    setDeletingMemberId(memberId);
+
+    try {
+      await deleteFamilyMember(memberId);
+      setMembers((current) =>
+        current.filter((member) => member.id !== memberId),
+      );
+    } finally {
+      setDeletingMemberId(null);
+    }
+  }, []);
+
   return (
     <div className="flex min-h-[calc(100dvh)] w-full flex-col gap-10 px-8 py-8">
       <FamilyHeader />
 
       <div className="grid gap-6 lg:grid-cols-[1.7fr_1fr]">
-        <ActiveMembersCard members={members} isLoading={isLoading} />
+        <ActiveMembersCard
+          members={members}
+          isLoading={isLoading}
+          deletingMemberId={deletingMemberId}
+          onDeleteMember={handleDeleteMember}
+        />
         <InviteMemberCard onSubmit={handleInvite} isSubmitting={isSubmitting} />
       </div>
     </div>

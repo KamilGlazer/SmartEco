@@ -1,5 +1,6 @@
 import {
   addMockFamilyMember,
+  deleteMockFamilyMember,
   getMockFamilyMembers,
 } from "@/api/family/mock";
 import type { FamilyMember, InviteMemberPayload } from "@/api/family/types";
@@ -24,4 +25,9 @@ async function inviteFamilyMember(
   return addMockFamilyMember(payload);
 }
 
-export { fetchFamilyMembers, inviteFamilyMember };
+async function deleteFamilyMember(id: string): Promise<void> {
+  await delay(FETCH_DELAY_MS);
+  deleteMockFamilyMember(id);
+}
+
+export { deleteFamilyMember, fetchFamilyMembers, inviteFamilyMember };

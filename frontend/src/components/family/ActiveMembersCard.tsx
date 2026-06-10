@@ -6,11 +6,15 @@ import { Users } from "lucide-react";
 type ActiveMembersCardProps = {
   members: FamilyMember[];
   isLoading?: boolean;
+  deletingMemberId?: string | null;
+  onDeleteMember: (memberId: string) => void;
 };
 
 function ActiveMembersCard({
   members,
   isLoading = false,
+  deletingMemberId = null,
+  onDeleteMember,
 }: ActiveMembersCardProps) {
   return (
     <Card className="border-white/10 bg-[#161616] py-0 ring-0">
@@ -32,7 +36,12 @@ function ActiveMembersCard({
         ) : (
           <div className="divide-y divide-white/10">
             {members.map((member) => (
-              <MemberRow key={member.id} member={member} />
+              <MemberRow
+                key={member.id}
+                member={member}
+                isDeleting={deletingMemberId === member.id}
+                onDelete={onDeleteMember}
+              />
             ))}
           </div>
         )}

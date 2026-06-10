@@ -56,9 +56,19 @@ function addMockFamilyMember(payload: InviteMemberPayload): FamilyMember {
   return { ...member };
 }
 
+function deleteMockFamilyMember(id: string): boolean {
+  const initialLength = mockMembers.length;
+  const index = mockMembers.findIndex((member) => member.id === id);
+  if (index === -1) return false;
+
+  mockMembers.splice(index, 1);
+  return mockMembers.length < initialLength;
+}
+
 export {
   addMockFamilyMember,
   createMemberFromInvite,
+  deleteMockFamilyMember,
   getMockFamilyMembers,
   mockMembers,
 };
