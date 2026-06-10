@@ -42,7 +42,7 @@ function InfrastructureFilterSelect({
   }, [isOpen]);
 
   function handleOptionClick(optionValue: string) {
-    onValueChange(value === optionValue ? "" : optionValue);
+    onValueChange(optionValue);
     setIsOpen(false);
   }
 

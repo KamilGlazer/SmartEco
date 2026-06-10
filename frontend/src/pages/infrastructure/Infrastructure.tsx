@@ -9,6 +9,7 @@ import type {
   InfrastructureDevice,
   InfrastructureFilters,
 } from "@/api/infrastructure/types";
+import { AddDevice } from "@/components/infrastructure/AddDevice";
 import { InfrastructureDeviceGrid } from "@/components/infrastructure/InfrastructureDeviceGrid";
 import { InfrastructureHeader } from "@/components/infrastructure/InfrastructureHeader";
 import { filterInfrastructureDevices } from "@/components/infrastructure/utils";
@@ -23,6 +24,7 @@ const Infrastructure = () => {
   const [deviceTypeFilter, setDeviceTypeFilter] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [togglingDeviceId, setTogglingDeviceId] = useState<string | null>(null);
+  const [showAddDevice, setShowAddDevice] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -76,6 +78,37 @@ const Infrastructure = () => {
     [],
   );
 
+  const handleDeviceAdded = useCallback((device: InfrastructureDevice) => {
+    setDevices((current) => [...current, device]);
+    setFilters((current) => {
+      const roomExists = current.rooms.some(
+        (room) => room.value === device.room.id,
+      );
+
+      if (roomExists) return current;
+
+      return {
+        ...current,
+        rooms: [
+          ...current.rooms,
+          { value: device.room.id, label: device.room.name },
+        ],
+      };
+    });
+  }, []);
+
+  if (showAddDevice) {
+    return (
+      <div className="flex min-h-[calc(100dvh)] w-full flex-col px-8 py-8">
+        <AddDevice
+          roomOptions={filters.rooms}
+          onBack={() => setShowAddDevice(false)}
+          onDeviceAdded={handleDeviceAdded}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="flex min-h-[calc(100dvh)] w-full flex-col gap-10 px-8 py-8">
       <InfrastructureHeader
@@ -91,6 +124,7 @@ const Infrastructure = () => {
         isLoading={isLoading}
         togglingDeviceId={togglingDeviceId}
         onDeviceToggle={handleDeviceToggle}
+        onAddDevice={() => setShowAddDevice(true)}
       />
     </div>
   );

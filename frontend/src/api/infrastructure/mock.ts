@@ -1,4 +1,6 @@
 import type {
+  AddManualDevicePayload,
+  DiscoveredBluetoothDevice,
   InfrastructureDevice,
   InfrastructureFilters,
 } from "@/api/infrastructure/types";
@@ -64,6 +66,110 @@ function getMockInfrastructureFilters(): InfrastructureFilters {
   };
 }
 
+const bluetoothDevices: DiscoveredBluetoothDevice[] = [
+  {
+    id: "bt-air-purifier",
+    name: "Air Purifier X1",
+    room: "Bedroom",
+    deviceType: "appliance",
+    signalLabel: "Strong signal",
+  },
+  {
+    id: "bt-smart-bulb",
+    name: "Smart Bulb RGB",
+    room: "Living Room",
+    deviceType: "lighting",
+    signalLabel: "Nearby",
+  },
+  {
+    id: "bt-climate-sensor",
+    name: "Climate Sensor",
+    room: "Kitchen",
+    deviceType: "climate",
+    signalLabel: "Moderate signal",
+  },
+];
+
+function resolveRoom(roomName: string): { id: string; name: string } {
+  const existing = infrastructureFilters.rooms.find(
+    (option) => option.label.toLowerCase() === roomName.trim().toLowerCase(),
+  );
+
+  if (existing) {
+    return { id: existing.value, name: existing.label };
+  }
+
+  const room = {
+    id: `room-${roomName.trim().toLowerCase().replace(/\s+/g, "-")}`,
+    name: roomName.trim(),
+  };
+
+  infrastructureFilters.rooms.push({ value: room.id, label: room.name });
+  return room;
+}
+
+function createInfrastructureDevice(
+  input: {
+    name: string;
+    room: string;
+    deviceType: InfrastructureDevice["deviceType"];
+    ipAddress?: string;
+  },
+): InfrastructureDevice {
+  return {
+    id: crypto.randomUUID(),
+    name: input.name.trim(),
+    room: resolveRoom(input.room),
+    deviceType: input.deviceType,
+    is_active: false,
+    energy24hKwh: 0,
+    energyHistory: [0, 0, 0, 0, 0, 0, 0],
+    ipAddress: input.ipAddress?.trim() || undefined,
+  };
+}
+
+function getMockBluetoothDevices(): DiscoveredBluetoothDevice[] {
+  return bluetoothDevices.map((device) => ({ ...device }));
+}
+
+function addMockInfrastructureDeviceFromBluetooth(
+  deviceId: string,
+): InfrastructureDevice | null {
+  const discovered = bluetoothDevices.find((device) => device.id === deviceId);
+  if (!discovered) return null;
+
+  const device = createInfrastructureDevice({
+    name: discovered.name,
+    room: discovered.room,
+    deviceType: discovered.deviceType,
+  });
+
+  mockInfrastructureDevices.push(device);
+  return {
+    ...device,
+    room: { ...device.room },
+    energyHistory: [...device.energyHistory],
+  };
+}
+
+function addMockInfrastructureDeviceManual(
+  payload: AddManualDevicePayload,
+): InfrastructureDevice {
+  const device = createInfrastructureDevice({
+    name: payload.name,
+    room: payload.room,
+    deviceType: "appliance",
+    ipAddress: payload.ipAddress,
+  });
+
+  mockInfrastructureDevices.push(device);
+  return {
+    ...device,
+    room: { ...device.room },
+    energyHistory: [...device.energyHistory],
+  };
+}
+
 function updateMockInfrastructureDevice(
   deviceId: string,
   isActive: boolean,
@@ -83,6 +189,9 @@ function updateMockInfrastructureDevice(
 }
 
 export {
+  addMockInfrastructureDeviceFromBluetooth,
+  addMockInfrastructureDeviceManual,
+  getMockBluetoothDevices,
   getMockInfrastructureDevices,
   getMockInfrastructureFilters,
   mockInfrastructureDevices,

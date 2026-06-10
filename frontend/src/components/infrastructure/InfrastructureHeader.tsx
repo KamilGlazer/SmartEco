@@ -1,5 +1,9 @@
 import type { InfrastructureFilters } from "@/api/infrastructure/types";
 import { InfrastructureFilterSelect } from "@/components/infrastructure/InfrastructureFilterSelect";
+import {
+  ALL_DEVICE_TYPES_OPTION,
+  ALL_ROOMS_OPTION,
+} from "@/components/infrastructure/utils";
 
 type InfrastructureHeaderProps = {
   filters: InfrastructureFilters;
@@ -30,14 +34,14 @@ function InfrastructureHeader({
       <div className="flex flex-wrap gap-3">
         <InfrastructureFilterSelect
           value={roomFilter}
-          placeholder="Select Room"
-          options={filters.rooms}
+          placeholder="All rooms"
+          options={[ALL_ROOMS_OPTION, ...filters.rooms]}
           onValueChange={onRoomFilterChange}
         />
         <InfrastructureFilterSelect
           value={deviceTypeFilter}
-          placeholder="Device Type"
-          options={filters.deviceTypes}
+          placeholder="All types"
+          options={[ALL_DEVICE_TYPES_OPTION, ...filters.deviceTypes]}
           onValueChange={onDeviceTypeFilterChange}
         />
       </div>

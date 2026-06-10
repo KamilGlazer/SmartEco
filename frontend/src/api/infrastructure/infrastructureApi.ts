@@ -1,9 +1,14 @@
 import {
+  addMockInfrastructureDeviceFromBluetooth,
+  addMockInfrastructureDeviceManual,
+  getMockBluetoothDevices,
   getMockInfrastructureDevices,
   getMockInfrastructureFilters,
   updateMockInfrastructureDevice,
 } from "@/api/infrastructure/mock";
 import type {
+  AddManualDevicePayload,
+  DiscoveredBluetoothDevice,
   InfrastructureDevice,
   InfrastructureFilters,
 } from "@/api/infrastructure/types";
@@ -34,7 +39,29 @@ async function toggleInfrastructureDevice(
   return updateMockInfrastructureDevice(deviceId, isActive) ?? null;
 }
 
+async function fetchBluetoothDevices(): Promise<DiscoveredBluetoothDevice[]> {
+  await delay(FETCH_DELAY_MS);
+  return getMockBluetoothDevices();
+}
+
+async function addInfrastructureDeviceFromBluetooth(
+  deviceId: string,
+): Promise<InfrastructureDevice | null> {
+  await delay(FETCH_DELAY_MS);
+  return addMockInfrastructureDeviceFromBluetooth(deviceId);
+}
+
+async function addInfrastructureDeviceManual(
+  payload: AddManualDevicePayload,
+): Promise<InfrastructureDevice> {
+  await delay(FETCH_DELAY_MS);
+  return addMockInfrastructureDeviceManual(payload);
+}
+
 export {
+  addInfrastructureDeviceFromBluetooth,
+  addInfrastructureDeviceManual,
+  fetchBluetoothDevices,
   fetchInfrastructureDevices,
   fetchInfrastructureFilters,
   toggleInfrastructureDevice,

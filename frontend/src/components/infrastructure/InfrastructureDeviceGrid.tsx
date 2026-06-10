@@ -7,6 +7,7 @@ type InfrastructureDeviceGridProps = {
   isLoading?: boolean;
   togglingDeviceId?: string | null;
   onDeviceToggle: (deviceId: string, isActive: boolean) => void;
+  onAddDevice: () => void;
 };
 
 function InfrastructureDeviceGrid({
@@ -14,6 +15,7 @@ function InfrastructureDeviceGrid({
   isLoading = false,
   togglingDeviceId = null,
   onDeviceToggle,
+  onAddDevice,
 }: InfrastructureDeviceGridProps) {
   if (isLoading) {
     return (
@@ -38,7 +40,7 @@ function InfrastructureDeviceGrid({
           isToggling={togglingDeviceId === device.id}
         />
       ))}
-      <AddDeviceCard />
+      <AddDeviceCard onClick={onAddDevice} />
     </div>
   );
 }

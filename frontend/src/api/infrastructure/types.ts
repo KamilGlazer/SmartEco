@@ -16,6 +16,21 @@ export interface InfrastructureDevice {
   energy24hKwh: number;
   /** kWh per 3-hour interval over the last 24 hours (7 readings) */
   energyHistory: number[];
+  ipAddress?: string;
+}
+
+export interface DiscoveredBluetoothDevice {
+  id: string;
+  name: string;
+  room: string;
+  deviceType: InfrastructureDeviceType;
+  signalLabel: string;
+}
+
+export interface AddManualDevicePayload {
+  name: string;
+  room: string;
+  ipAddress: string;
 }
 
 export interface InfrastructureFilterOption {
